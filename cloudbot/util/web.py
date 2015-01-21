@@ -7,7 +7,7 @@ import requests
 
 # Constants
 
-DEFAULT_SHORTENER = 'is.gd'
+DEFAULT_SHORTENER = 'blny.me'
 DEFAULT_PASTEBIN = 'hastebin'
 
 HASTEBIN_SERVER = 'http://hastebin.com'
@@ -122,7 +122,31 @@ def _pastebin(name):
         pastebins[name] = impl()
 
     return _decorate
-
+	
+	
+@_shortener('blny.me')
+class Blnyme(Shortener):
+    def shorten(self, url, custom=None):
+        p = {'signature': 'bce87e8a86', 'format': 'json', 'keyword': custom, 'action': 'shorturl', 'url': url}
+        h = {'User-Agent': 'Walter - https://github.com/Mu5tank05/Walter'}
+        r = requests.get('http://blny.me/api.php', params=p, headers=h)
+        j = r.json()
+ 
+        if 'shorturl' in j:
+            return j['shorturl']
+        else:
+            raise ServiceError(j['message'], r)
+ 
+    def expand(self, url):
+        p = {'signature': 'bce87e8a86', 'action': 'expand', 'shorturl': url, 'format': 'json'}
+        h = {'User-Agent': 'Walter https://github.com/Mu5tank05/Walter'}
+        r = requests.get('http://blny.me/api.php', params=p, headers=h)
+        j = r.json()
+ 
+        if 'longurl' in j:
+            return j['longurl']
+        else:
+            raise ServiceError(j['message'], r)
 
 @_shortener('is.gd')
 class Isgd(Shortener):
