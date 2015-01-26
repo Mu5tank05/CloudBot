@@ -1,7 +1,6 @@
 import asyncio
 import time
 import logging
-import collections
 import re
 import os
 import gc
@@ -61,9 +60,6 @@ class CloudBot:
 
         # for plugins
         self.logger = logger
-
-        # for plugins to abuse
-        self.memory = collections.defaultdict()
 
         # declare and create data folder
         self.data_dir = os.path.abspath('data')

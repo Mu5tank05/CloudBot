@@ -2,7 +2,6 @@ import re
 import random
 
 from imgurpython import ImgurClient
-from contextlib import suppress
 
 from cloudbot import hook
 from cloudbot.util import web
@@ -12,8 +11,6 @@ from cloudbot.util import web
 # to fix this we monkeypatch logged_in to disable login checking
 # yes, it's kinda dirty, but it works :)
 ImgurClient.logged_in = lambda x: None
-
-NO_NSFW = False
 
 
 def get_items(text):
@@ -38,9 +35,6 @@ def get_items(text):
     else:
         reddit_search = False
         items = imgur_api.gallery()
-
-    if NO_NSFW:
-        items = [item for item in items if not item.nsfw]
 
     return items, reddit_search
 
@@ -91,9 +85,11 @@ def imgur(text):
         title = item.title
 
     # if it's an imgur meme, add the meme name
-    # if not, AttributeError will trigger and code will carry on
-    with suppress(AttributeError):
+    try:
         title = "\x02{}\x02 - {}".format(item.meme_metadata["meme_name"].lower(), title)
+    except:
+        # this is a super un-important thing, so if it fails we don't care, carry on
+        pass
 
     # if the item has a tag, show that
     if item.section:
