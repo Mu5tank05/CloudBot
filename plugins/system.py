@@ -17,8 +17,8 @@ def about(text, conn):
         return "CloudBot Refresh is released under the GPL v3 license, get the source code " \
                "at https://github.com/CloudBotIRC/CloudBot/"
 
-    return "{} is powered by CloudBot Refresh! ({}) - " \
-           "https://github.com/CloudBotIRC/CloudBot/".format(conn.nick, cloudbot.__version__)
+    return "{} is powered by CloudBot Refresh! (Walter fork) ({}) - " \
+           "https://github.com/Mu5tank05/Walter".format(conn.nick, cloudbot.__version__)
 
 
 @hook.command(autohelp=False)
