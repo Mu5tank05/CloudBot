@@ -52,5 +52,5 @@ def coolrom(text):
 
 
 @hook.command(autohelp=False)
-def coolromsys(text):
+def coolromsys():
     return "Systems Supported: " + ", ".join(map(str, systems))
