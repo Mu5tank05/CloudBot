@@ -1,4 +1,5 @@
 import time
+
 from cloudbot import hook
 
 
@@ -68,6 +69,10 @@ def helloregex(match, nick=None, message=None):
     else:
         message("Hello {}!".format(nick))
 
+
 @hook.command
-def poke(text, action=None):
-    action("pokes " + text);
+def poke(text, nick, action=None):
+    if nick == "Sam":
+        return
+    else:
+        action("pokes " + text);
