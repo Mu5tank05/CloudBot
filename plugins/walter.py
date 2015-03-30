@@ -96,9 +96,6 @@ def poke(text, nick, action=None):
     if nick == "Sam":
         return
     else:
-<<<<<<< HEAD
-        action("pokes " + text);
-=======
         action("pokes " + text)
 
 
@@ -109,4 +106,3 @@ def b2d(number):
 @hook.command()
 def d2b(number):
     return "Binary of {} is {}".format(number, d_to_b(number))
->>>>>>> 4de9a01bda7b13d07528d4743ae2cacef7c5e46a
