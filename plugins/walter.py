@@ -8,16 +8,12 @@ def piglatin(text):
     """piglatin - returns word in pig latin format"""
     word = text.lower()
     vowels = 'aeiou'
-
     pig = 'ay'
-
     first = word[0]
-
     if first in vowels:
         newword = word + pig
     else:
         newword = word[1:] + first + pig
-
     return "{} becomes {}".format(word, newword)
 
 
@@ -46,22 +42,7 @@ def fourtwenty(nick=None, message=None):
     if nick == "Mu5tank05" or nick == "Sam" or nick == "Mu5tank05-mc":
         message("{} loves to blaze".format(nick))
 
-
-@hook.command
-def says(text, action=None, nick=None, conn=None, chan=None):
-    """says - says (text) in current channel"""
-    action("is saying something for " + nick)
-    time.sleep(1)
-    text = text.split(" ")
-    if text[0][0] == "#":
-        message = " ".join(text[1:])
-        out = "PRIVMSG {} :{}".format(text[0], message)
-    else:
-        message = " ".join(text[0:])
-        out = "PRIVMSG {} :{}".format(chan, message)
-    conn.send(out)
-
-
+		
 @hook.regex(r'(?i)(Hello|Hi) (w|W)alter(!| |\\.|\?)*')
 def helloregex(match, nick=None, message=None):
     if match.group(3) == "?":
@@ -76,3 +57,8 @@ def poke(text, nick, action=None):
         return
     else:
         action("pokes " + text)
+
+
+@hook.regex(r'.*(?i)cloud.*')
+def clouds(message=None, nick=None):
+    message("{} is talking about Clouds".format(nick))
