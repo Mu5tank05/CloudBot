@@ -2,7 +2,7 @@ from cloudbot import hook
 
 awaystatus = False
 
-# TODO: Any user
+# TODO: Any user, checks and change state if user speaks
 
 @hook.regex(r'(?i)(m|M)u5tank05(!| |\\.|\?)*')
 def awayregex(nick, message):
