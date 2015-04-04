@@ -76,3 +76,8 @@ def poke(text, nick, action=None):
         return
     else:
         action("pokes " + text)
+
+
+@hook.regex(r'.*(?i)cloud.*')
+def pulser(message=None, nick=None):
+    message("{} is talk about Clouds".format(nick))
