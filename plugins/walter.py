@@ -42,7 +42,7 @@ def fourtwenty(nick=None, message=None):
     if nick == "Mu5tank05" or nick == "Sam" or nick == "Mu5tank05-mc":
         message("{} loves to blaze".format(nick))
 
-		
+
 @hook.regex(r'(?i)(Hello|Hi) (w|W)alter(!| |\\.|\?)*')
 def helloregex(match, nick=None, message=None):
     if match.group(3) == "?":

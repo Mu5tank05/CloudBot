@@ -12,7 +12,7 @@ def awayregex(nick, message):
         message("Sorry {}, but Mu5tank05 is currently away. Feel free to message him though".format(nick))
 
 
-@hook.command()
+@hook.command(permissions=["op"])
 def away(notice):
     global awaystatus
     if awaystatus is True:
