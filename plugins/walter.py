@@ -1,7 +1,7 @@
 import time
 
 from cloudbot import hook
-
+from cloudbot.util import http
 
 @hook.command
 def piglatin(text):
@@ -62,3 +62,10 @@ def poke(text, nick, action=None):
 @hook.regex(r'.*(?i)cloud.*')
 def clouds(message=None, nick=None):
     message("{} is talking about Clouds".format(nick))
+
+
+@hook.command(autohelp=False)
+def wtc():
+    target_url = "http://whatthecommit.com/index.txt"
+    for line in http.open(target_url):
+        return "{}".format(http.unescape(line))
