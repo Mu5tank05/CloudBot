@@ -3,21 +3,24 @@ import re
 import time
 
 from cloudbot import hook
-from cloudbot.util import botvars
+from cloudbot.util import database
+
+from sqlalchemy import select
 from sqlalchemy import Table, Column, String, PrimaryKeyConstraint
 from sqlalchemy.types import REAL
-from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
+
 
 qtable = Table(
     'quote',
-    botvars.metadata,
-    Column('chan', String),
-    Column('nick', String),
-    Column('add_nick', String),
-    Column('msg', String),
+    database.metadata,
+    Column('chan', String(25)),
+    Column('nick', String(25)),
+    Column('add_nick', String(25)),
+    Column('msg', String(500)),
     Column('time', REAL),
-    Column('deleted', String, default=0),
-    PrimaryKeyConstraint('chan', 'nick', 'msg')
+    Column('deleted', String(5), default=0),
+    PrimaryKeyConstraint('chan', 'nick', 'time')
 )
 
 
@@ -40,7 +43,7 @@ def add_quote(db, chan, target, sender, message):
         )
         db.execute(query)
         db.commit()
-    except:
+    except IntegrityError:
         return "Message already stored, doing nothing."
     return "Quote added."
 
