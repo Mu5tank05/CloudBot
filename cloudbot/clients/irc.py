@@ -142,12 +142,15 @@ class IrcClient(Client):
 
     def message(self, target, *messages):
         for text in messages:
+            text = "".join(text.splitlines())
             self.cmd("PRIVMSG", target, text)
 
     def action(self, target, text):
+        text = "".join(text.splitlines())
         self.ctcp(target, "ACTION", text)
 
     def notice(self, target, text):
+        text = "".join(text.splitlines())
         self.cmd("NOTICE", target, text)
 
     def set_nick(self, nick):
