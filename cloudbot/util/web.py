@@ -22,7 +22,7 @@ import requests
 DEFAULT_SHORTENER = 'blny.me'
 DEFAULT_PASTEBIN = 'hastebin'
 
-HASTEBIN_SERVER = 'http://hasteb.in'
+HASTEBIN_SERVER = 'https://hasteb.in'
 
 # Python eval
 
@@ -141,7 +141,7 @@ class Blnyme(Shortener):
     def shorten(self, url, custom=None):
         p = {'signature': 'bce87e8a86', 'format': 'json', 'keyword': custom, 'action': 'shorturl', 'url': url}
         h = {'User-Agent': 'Walter - https://github.com/Mu5tank05/Walter'}
-        r = requests.get('http://blny.me/api.php', params=p, headers=h)
+        r = requests.get('https://blny.me/api.php', params=p, headers=h)
         j = r.json()
  
         if 'shorturl' in j:
@@ -152,7 +152,7 @@ class Blnyme(Shortener):
     def expand(self, url):
         p = {'signature': 'bce87e8a86', 'action': 'expand', 'shorturl': url, 'format': 'json'}
         h = {'User-Agent': 'Walter https://github.com/Mu5tank05/Walter'}
-        r = requests.get('http://blny.me/api.php', params=p, headers=h)
+        r = requests.get('https://blny.me/api.php', params=p, headers=h)
         j = r.json()
  
         if 'longurl' in j:

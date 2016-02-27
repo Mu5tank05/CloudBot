@@ -3,6 +3,9 @@ import time
 from cloudbot import hook
 from cloudbot.util import http
 
+import requests
+
+
 @hook.command
 def piglatin(text):
     """piglatin - returns word in pig latin format"""
@@ -49,6 +52,14 @@ def helloregex(match, nick=None, message=None):
         message("Hi {}, what's your question?".format(nick))
     else:
         message("Hello {}!".format(nick))
+
+
+@hook.regex(r'(?i)(I|i)s (.*) (S|s)hit (A|a)t (D|d)ota(!| |\\.|\?)*')
+def dota(match, nick=None, message=None):
+    if match.group(2) == "Adrian" or "adrian":
+        message("He certainly is old mate {}".format(nick))
+    else:
+        message("{} is not shit at Dota, but Adrain is".format(match.group(2)))
 
 
 @hook.command
