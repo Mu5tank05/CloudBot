@@ -3,7 +3,7 @@ from cloudbot import hook
 from cloudbot.util import web, formatting
 
 
-@hook.command()
+@hook.command('beam', 'bp')
 def beampro(text):
     """NA"""
 
@@ -16,6 +16,7 @@ def beampro(text):
         game = j['type']
         name_game = game['name']
         if j['online'] == 'true':
+			# 
             return '{} is \x034\x02Offline\x02'.format(stream_username)
         else:
             viewers = j['viewersCurrent']
