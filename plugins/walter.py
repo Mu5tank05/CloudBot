@@ -1,8 +1,6 @@
 import time
-
 from cloudbot import hook
 from cloudbot.util import http
-
 import requests
 
 
@@ -42,25 +40,19 @@ def refrainyoself(match, nick=None, message=None):
 
 @hook.regex(r'\#(fourtwenty|420)')
 def fourtwenty(nick=None, message=None):
-    if nick == "Mu5tank05" or nick == "Sam" or nick == "Mu5tank05-mc":
+    if nick == "Mu5tank05" or nick == "nathanblaney" or nick == "Mu5tank05-mc":
         message("{} loves to blaze".format(nick))
-
-
+		
+@hook.regex(r'\:pepe:')
+def pepe(nick=None, message=None):
+	message(":pepe:")
+		
 @hook.regex(r'(?i)(Hello|Hi) (w|W)alter(!| |\\.|\?)*')
 def helloregex(match, nick=None, message=None):
     if match.group(3) == "?":
         message("Hi {}, what's your question?".format(nick))
     else:
         message("Hello {}!".format(nick))
-
-
-@hook.regex(r'(?i)(I|i)s (.*) (S|s)hit (A|a)t (D|d)ota(!| |\\.|\?)*')
-def dota(match, nick=None, message=None):
-    if match.group(2) == "Adrian" or "adrian":
-        message("He certainly is old mate {}".format(nick))
-    else:
-        message("{} is not shit at Dota, but Adrain is".format(match.group(2)))
-
 
 @hook.command
 def poke(text, nick, action=None):
@@ -80,3 +72,20 @@ def wtc():
     target_url = "http://whatthecommit.com/index.txt"
     for line in http.open(target_url):
         return "{}".format(http.unescape(line))
+		
+@hook.regex(r'(?i)(I|i)s (J|j)amii (.*)(!| |\\.|\?)*')
+def jamii(match, nick=None, message=None):
+	message("He certainly is {} old mate ".format(match.group(3)))
+
+@hook.command(autohelp=False)		
+def pgo():
+	try:
+		time = requests.get('https://pgorelease.nianticlabs.com/plfe/').elapsed.total_seconds()
+		if time < 3:
+			return "Go! Catch them all!"
+		else:
+			return "Server(s) are down, go back to work"
+	except:
+		return "I can't tell currently, maybe Team Rocket have hijacked the server(s)"
+		
+		
