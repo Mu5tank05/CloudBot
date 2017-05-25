@@ -22,13 +22,7 @@ def ctcp_ping(notice, irc_ctcp_text):
 
 
 @asyncio.coroutine
-<<<<<<< HEAD
-@hook.regex(r'^\x01TIME\x01$')
-def ctcp_time(notice):
-    notice('\x01TIME: The time is: {}'.format(time.strftime("%r", time.localtime())))
-=======
 @hook.event(EventType.other)
 def ctcp_time(notice, irc_ctcp_text):
     if irc_ctcp_text is not None and irc_ctcp_text.lower().strip() == "time":
         notice('\x01TIME: The time is: {}'.format(time.strftime("%r", time.localtime())))
->>>>>>> upstream/master
