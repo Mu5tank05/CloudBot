@@ -30,10 +30,10 @@ def bingify(s):
 
 
 @hook.command("bing", "b")
-def bing(text, bot):
+def bing(text, bot, message):
     """<query> - returns the first bing search result for <query>"""
+	
     api_key = bot.config.get("api_keys", {}).get("bing_azure")
-
     # handle NSFW
     show_nsfw = text.endswith(" nsfw")
     # remove "nsfw" from the input string after checking for it
@@ -67,7 +67,6 @@ def bing(text, bot):
     title = formatting.truncate(unescape(result["Title"]), 60)
     desc = formatting.truncate(unescape(result["Description"]), 150)
     url = unescape(result["Url"])
-
     return colors.parse('{} -- $(b){}$(b): "{}"'.format(url, title, desc))
 
 

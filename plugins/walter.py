@@ -2,6 +2,7 @@ import time
 from cloudbot import hook
 from cloudbot.util import http
 import requests
+import random
 
 
 @hook.command
@@ -64,7 +65,17 @@ def poke(text, nick, action=None):
 
 @hook.regex(r'.*(?i)cloud.*')
 def clouds(message=None, nick=None):
-    message("{} is talking about Clouds".format(nick))
+    message("{} is talking about clouds".format(nick))
+	
+@hook.regex(r'.*(?i)database.*')
+def db(message=None, nick=None):
+	num = random.randint(0,10)
+	if num >= 5:
+		message("fuck off {} you gimp".format(nick))
+	elif num >=10:
+		message("confirmed {} is a fuckpig".format(nick))
+	else:
+		message("{} loves to fisted by ten database engineers".format(nick))
 
 
 @hook.command(autohelp=False)
@@ -76,16 +87,3 @@ def wtc():
 @hook.regex(r'(?i)(I|i)s (J|j)amii (.*)(!| |\\.|\?)*')
 def jamii(match, nick=None, message=None):
 	message("He certainly is {} old mate ".format(match.group(3)))
-
-@hook.command(autohelp=False)		
-def pgo():
-	try:
-		time = requests.get('https://pgorelease.nianticlabs.com/plfe/').elapsed.total_seconds()
-		if time < 3:
-			return "Go! Catch them all!"
-		else:
-			return "Server(s) are down, go back to work"
-	except:
-		return "I can't tell currently, maybe Team Rocket have hijacked the server(s)"
-		
-		

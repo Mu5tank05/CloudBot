@@ -37,7 +37,7 @@ def litecoin():
     return crypto_command("ltc")
 
 
-@hook.command("dogecoin", "doge", autohelp=False)
+@hook.command("dogecoin", autohelp=False)
 def dogecoin():
     """ -- Returns current dogecoin value """
     # alias
