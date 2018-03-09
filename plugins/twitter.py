@@ -2,8 +2,10 @@ import re
 import random
 from datetime import datetime
 
-import tweepy
+import tweepy, logging, requests, os
 from cloudbot import hook
+
+logger = logging.getLogger("cloudbot")
 
 from cloudbot.util import timeformat
 
@@ -175,3 +177,36 @@ def twuser(text):
     return "{}@\x02{}\x02 ({}){} has \x02{:,}\x02 tweets and \x02{:,}\x02 followers.{}" \
            "".format(prefix, user.screen_name, user.name, loc_str, user.statuses_count, user.followers_count,
                      desc_str)
+					 
+@hook.command(permissions=["botcontrol"])
+def tweet(conn, text, chan, nick=None):
+    """tweet <text> -- Send's at Tweet to the Rawr xD Twitter"""
+    if chan == "#tweetverse":
+        tw_api.update_status(status = text)
+        logger.info("[{}|Twitter] Text Tweet Sent by {}.".format(conn.name, nick))
+
+@hook.regex(r'^(?!~|@)(.*)')		
+def auto_tweet_text(conn, match, chan, nick=None):
+    """tweet <text> -- Send's at Tweet to the Rawr xD Twitter"""
+    if chan == "#tweetverse":
+        match_phrase = match.group().encode('utf-8')
+        tw_api.update_status(status = match_phrase)
+        logger.info("[{}|Twitter] Text Tweet Sent by {}.".format(conn.name, nick))
+		
+#@hook.regex(r'(http.*.slack.com/files.*/?.)')		
+def auto_tweet_url(message, conn, match, chan, nick=None):
+    """tweet <text> -- Send's at Tweet to the Rawr xD Twitter"""
+    if chan == "#bots":
+        match_phrase = match.group(1)
+        tweet_image(match_phrase)
+					 
+def tweet_image(url):
+    filename = 'temp.jpg'
+    try:
+        request = requests.get(url, stream=True)
+        with open("/home/nathanblaney/Walter/" + filename, 'wb') as image:
+            for chunk in request:
+                image.write(chunk)
+                tw_api.update_with_media(filename = filename, status = "lol")
+    except requests.ConnectionError as e:
+        print(e)
